@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
 import { useForm } from "react-hook-form";
 
-const Login = () => {
+function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
@@ -18,13 +18,14 @@ const Login = () => {
       const session = await authService.login(data);
       if (session) {
         const userData = await authService.getCurrentUser();
-        if (userData) dispatch(authLogin({ userData }));
+        if (userData) dispatch(authLogin(userData));
         navigate("/");
       }
     } catch (error) {
       setError(error.message);
     }
   };
+
   return (
     <div className="flex items-center justify-center w-full">
       <div
@@ -79,6 +80,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;
